@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to April 8th, 2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .countdown {
+            font-size: 1.5rem;
+        }
+        .times{
+            font-size: 2rem;
+            line-height: 1.6;
+        }
+        .aych1{
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>South Lewis Total Eclipse April 8th 2024</h1>
+    <div class="times" id="targetTimes"></div><br>
+    <hr>
+    <div class="aych1">First Contact: <span class="countdown" id="countdown1"></span></div><br>
+    <div class="aych1">Totality Begins: <span class="countdown" id="countdown2"></span></div><br>
+    <div class="aych1">Totality Maximum: <span class="countdown" id="countdown3"></span></div><br>
+    <div class="aych1">Totality Ends: <span class="countdown" id="countdown4"></span></div><br>
+    <div class="aych1">Fourth Contact: <span class="countdown" id="countdown5"></span></div><br>
+
+    <script>
+        // Target date: April 8th, 2024
+        const targetDateFirstContact = new Date('April 8, 2024 14:10:34').getTime();
+        const targetDateTotalityBegins = new Date('April 8, 2024 15:23:24').getTime();
+        const targetDateTotalityMax = new Date('April 8, 2024 15:24:55').getTime();
+        const targetDateTotalityEnds = new Date('April 8, 2024 15:26:26').getTime();
+        const targetDateFourthContact = new Date('April 8, 2024 16:35:30').getTime();
+
+        const targetA = new Date(targetDateFirstContact);
+        const targetB = new Date(targetDateTotalityBegins);
+        const targetC = new Date(targetDateTotalityMax);
+        const targetD = new Date(targetDateTotalityEnds);
+        const targetE = new Date(targetDateFourthContact);
+
+        document.getElementById("targetTimes").innerHTML = `First Contact: ${targetA.getHours()}:${targetA.getMinutes()}:${targetA.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Totality Begins: ${targetB.getHours()}:${targetB.getMinutes()}:${targetB.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Totality Maximum: ${targetC.getHours()}:${targetC.getMinutes()}:${targetC.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Totality Ends: ${targetD.getHours()}:${targetD.getMinutes()}:${targetD.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Fourth Contact: ${targetE.getHours()}:${targetE.getMinutes()}:${targetE.getSeconds()}PM <br>`;
+        // Update the countdown every second
+        const countdown = setInterval(() => {
+            var now = new Date().getTime();
+            console.log(now);
+            const dstInEffect = isDstInEffect(now);
+            console.log(dstInEffect);
+            if(dstInEffect){
+                
+            }
+            else{
+                now -= 1*60*60*1000;
+            }
+
+            var target1 = timeRemains(targetDateFirstContact-now);
+            var target2 = timeRemains(targetDateTotalityBegins-now);
+            var target3 = timeRemains(targetDateTotalityMax-now);
+            var target4 = timeRemains(targetDateTotalityEnds-now);
+            var target5 = timeRemains(targetDateFourthContact-now);
+            // Calculations for days, hours, minutes, and seconds
+
+
+            // Display the countdown
+            document.getElementById('countdown1').innerHTML = `${target1[0]}d ${target1[1]}h ${target1[2]}m ${target1[3]}s`;
+            document.getElementById('countdown2').innerHTML = `${target2[0]}d ${target2[1]}h ${target2[2]}m ${target2[3]}s`;
+            document.getElementById('countdown3').innerHTML = `${target3[0]}d ${target3[1]}h ${target3[2]}m ${target3[3]}s`;
+            document.getElementById('countdown4').innerHTML = `${target4[0]}d ${target4[1]}h ${target4[2]}m ${target4[3]}s`;
+            document.getElementById('countdown5').innerHTML = `${target5[0]}d ${target5[1]}h ${target5[2]}m ${target5[3]}s`;
+
+
+        }, 1000);
+
+        function timeRemains(x){
+            var a = [];
+            const days = Math.floor(x / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((x % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((x % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((x % (1000 * 60)) / 1000);
+            a = [days,hours,minutes,seconds];
+            return a;
+        }
+
+        function isDstInEffect(dateA) {
+            const dateTest = new Date(dateA);
+            const januaryDst = new Date(dateTest.getFullYear(), 0, 1);
+            const julyDst = new Date(dateTest.getFullYear(), 6, 1);
+            return dateTest.getTimezoneOffset() < Math.max(januaryDst.getTimezoneOffset(), julyDst.getTimezoneOffset());
+        }
+    </script>
+</body>
+</html>
