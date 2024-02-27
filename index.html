@@ -12,7 +12,7 @@
             color: white;
         }
         .countdown {
-            font-size: 1.5rem;
+            font-size: 2rem;
         }
         .times{
             font-size: 2rem;
@@ -25,15 +25,19 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            gap: 20px 50px;
         }
         .row{
             display: flex;
             flex-direction: row;
-            align-items: stretch;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 40px;
         }
         .column{
             flex-direction: column;
             text-align: left;
+            
         }
     </style>
 </head>
@@ -42,19 +46,25 @@
     <div class="times" id="targetTimes"></div><br>
     <hr>
     <div class="panel">
-        <div class="row">
-            <div class="column">
-                <div class="aych1">First Contact: </div><br>
-                <div class="aych1">Totality Begins: </div><br>
-                <div class="aych1">Totality Maximum: </div><br>
-                <div class="aych1">Totality Ends: </div><br>
-                <div class="aych1">Fourth Contact: </div><br>
-            </div>
-            <div class="column">
+        <div class="column">
+            <div class="row">
+                <div class="aych1">First Contact: </div>
                 <div class="countdown" id="countdown1"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Totality Begins: </div>
                 <div class="countdown" id="countdown2"></div>
+            </div>
+            <div class="row">    
+                <div class="aych1">Totality Maximum: </div>
                 <div class="countdown" id="countdown3"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Totality Ends: </div>
                 <div class="countdown" id="countdown4"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Fourth Contact: </div>
                 <div class="countdown" id="countdown5"></div>
             </div>
         </div>
@@ -73,11 +83,11 @@
         const targetD = new Date(targetDateTotalityEnds);
         const targetE = new Date(targetDateFourthContact);
 
-        document.getElementById("targetTimes").innerHTML = `First Contact: ${targetA.getHours()}:${targetA.getMinutes()}:${targetA.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Totality Begins: ${targetB.getHours()}:${targetB.getMinutes()}:${targetB.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Totality Maximum: ${targetC.getHours()}:${targetC.getMinutes()}:${targetC.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Totality Ends: ${targetD.getHours()}:${targetD.getMinutes()}:${targetD.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Fourth Contact: ${targetE.getHours()}:${targetE.getMinutes()}:${targetE.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML = `First Contact: ${targetA.getHours()-12}:${targetA.getMinutes()}:${targetA.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Totality Begins: ${targetB.getHours()-12}:${targetB.getMinutes()}:${targetB.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Totality Maximum: ${targetC.getHours()-12}:${targetC.getMinutes()}:${targetC.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Totality Ends: ${targetD.getHours()-12}:${targetD.getMinutes()}:${targetD.getSeconds()}PM <br>`;
+        document.getElementById("targetTimes").innerHTML += `Fourth Contact: ${targetE.getHours()-12}:${targetE.getMinutes()}:${targetE.getSeconds()}PM <br>`;
         // Update the countdown every second
         const countdown = setInterval(() => {
             var now = new Date().getTime();
@@ -98,14 +108,12 @@
             var target5 = timeRemains(targetDateFourthContact-now);
             // Calculations for days, hours, minutes, and seconds
 
-
             // Display the countdown
             document.getElementById('countdown1').innerHTML = `${target1[0]}d ${target1[1]}h ${target1[2]}m ${target1[3]}s`;
             document.getElementById('countdown2').innerHTML = `${target2[0]}d ${target2[1]}h ${target2[2]}m ${target2[3]}s`;
             document.getElementById('countdown3').innerHTML = `${target3[0]}d ${target3[1]}h ${target3[2]}m ${target3[3]}s`;
             document.getElementById('countdown4').innerHTML = `${target4[0]}d ${target4[1]}h ${target4[2]}m ${target4[3]}s`;
             document.getElementById('countdown5').innerHTML = `${target5[0]}d ${target5[1]}h ${target5[2]}m ${target5[3]}s`;
-
 
         }, 1000);
 
