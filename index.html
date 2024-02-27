@@ -8,6 +8,8 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: black;
+            color: white;
         }
         .countdown {
             font-size: 1.5rem;
@@ -19,18 +21,44 @@
         .aych1{
             font-size: 2rem;
         }
+        .panel{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .row{
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+        }
+        .column{
+            flex-direction: column;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <h1>South Lewis Total Eclipse April 8th 2024</h1>
     <div class="times" id="targetTimes"></div><br>
     <hr>
-    <div class="aych1">First Contact: <span class="countdown" id="countdown1"></span></div><br>
-    <div class="aych1">Totality Begins: <span class="countdown" id="countdown2"></span></div><br>
-    <div class="aych1">Totality Maximum: <span class="countdown" id="countdown3"></span></div><br>
-    <div class="aych1">Totality Ends: <span class="countdown" id="countdown4"></span></div><br>
-    <div class="aych1">Fourth Contact: <span class="countdown" id="countdown5"></span></div><br>
-
+    <div class="panel">
+        <div class="row">
+            <div class="column">
+                <div class="aych1">First Contact: </div><br>
+                <div class="aych1">Totality Begins: </div><br>
+                <div class="aych1">Totality Maximum: </div><br>
+                <div class="aych1">Totality Ends: </div><br>
+                <div class="aych1">Fourth Contact: </div><br>
+            </div>
+            <div class="column">
+                <div class="countdown" id="countdown1"></div>
+                <div class="countdown" id="countdown2"></div>
+                <div class="countdown" id="countdown3"></div>
+                <div class="countdown" id="countdown4"></div>
+                <div class="countdown" id="countdown5"></div>
+            </div>
+        </div>
+    </div>
     <script>
         // Target date: April 8th, 2024
         const targetDateFirstContact = new Date('April 8, 2024 14:10:34').getTime();
