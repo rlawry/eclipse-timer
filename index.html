@@ -39,6 +39,9 @@
             text-align: left;
             
         }
+        #canvas{
+            position:relative;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +90,78 @@
             </div>
         </div>
     </div>
+    <canvas id="canvas" width="200" height="200"></canvas>
     <script>
+        function MoonPainter( canvas ) {
+            this.lineWidth = 1;
+            this.radius = (canvas.width) / 2 - this.lineWidth / 2;
+            this.offset = (this.lineWidth) / 2;
+
+            this.canvas = canvas;
+            this.ctx = canvas.getContext( '2d' );
+        }
+
+        MoonPainter.prototype = {
+            _drawDisc: function() {
+                this.ctx.translate( this.offset, this.offset ) ;
+                this.ctx.beginPath();
+                this.ctx.arc( this.radius, this.radius, this.radius, 0, 2 * Math.PI, true );
+                this.ctx.closePath();
+                this.ctx.fillStyle = '#fff';
+                this.ctx.strokeStyle = '#fff';
+                this.ctx.lineWidth = this.lineWidth;
+
+                this.ctx.fill();			
+                this.ctx.stroke();
+            },
+
+            _drawPhase: function( phase ) {
+                this.ctx.beginPath();
+                this.ctx.arc( this.radius, this.radius, this.radius, -Math.PI/2, Math.PI/2, true );
+                this.ctx.closePath();
+                this.ctx.fillStyle = '#000';
+                this.ctx.fill();
+
+                this.ctx.translate( this.radius, this.radius );
+                this.ctx.scale( phase, 1 );
+                this.ctx.translate( -this.radius, -this.radius );
+                this.ctx.beginPath();
+                this.ctx.arc( this.radius, this.radius, this.radius, -Math.PI/2, Math.PI/2, true );
+                this.ctx.closePath();
+                this.ctx.fillStyle = phase > 0 ? '#fff' : '#000';
+                this.ctx.fill();
+            },
+            
+            /**
+             * @param {Number} The phase expressed as a float in [0,1] range .
+             */	
+            paint( phase ) {
+                this.ctx.save();
+                this.ctx.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+                if ( phase <= 0.5 ) {
+                    this._drawDisc();
+                    this._drawPhase( 4 * phase - 1 );
+                } else {
+                    this.ctx.translate( this.radius + 2 * this.offset, this.radius + 2 * this.offset );
+                    this.ctx.rotate( Math.PI );
+                    this.ctx.translate( -this.radius, -this.radius );
+
+                    this._drawDisc();
+                    this._drawPhase( 4 * ( 1 - phase ) - 1 );
+                }
+
+                this.ctx.restore();		
+            }
+        }
+
+        var phase = 0.58;
+        var points = 0;
+        var painter = new MoonPainter( document.getElementById( 'canvas' ) );
+        var b = 235;
+        var a = 135;
+        var g = 206;
+        painter.paint(phase);
+        //2551442976
         // Target date: April 8th, 2024
         const targetDateFirstContact = new Date('April 8, 2024 14:10:34').getTime();
         const targetDateTotalityBegins = new Date('April 8, 2024 15:23:24').getTime();
@@ -127,11 +201,11 @@
             // Calculations for days, hours, minutes, and seconds
 
             // Display the countdown
-            document.getElementById('countdown1').innerHTML = `${target1[0]}d ${target1[1]}h ${target1[2]}m ${target1[3]}s`;
-            document.getElementById('countdown2').innerHTML = `${target2[0]}d ${target2[1]}h ${target2[2]}m ${target2[3]}s`;
-            document.getElementById('countdown3').innerHTML = `${target3[0]}d ${target3[1]}h ${target3[2]}m ${target3[3]}s`;
-            document.getElementById('countdown4').innerHTML = `${target4[0]}d ${target4[1]}h ${target4[2]}m ${target4[3]}s`;
-            document.getElementById('countdown5').innerHTML = `${target5[0]}d ${target5[1]}h ${target5[2]}m ${target5[3]}s`;
+            document.getElementById('countdown1').innerHTML = `${target1[0]}d ${target1[1]}h ${(target1[2]<10)? '0'+target1[2]:target1[2]}m ${(target1[3]<10)? '0'+target1[3]:target1[3]}s`;
+            document.getElementById('countdown2').innerHTML = `${target2[0]}d ${target2[1]}h ${(target2[2]<10)? '0'+target2[2]:target2[2]}m ${(target2[3]<10)? '0'+target2[3]:target2[3]}s`;
+            document.getElementById('countdown3').innerHTML = `${target3[0]}d ${target3[1]}h ${(target3[2]<10)? '0'+target3[2]:target3[2]}m ${(target3[3]<10)? '0'+target3[3]:target3[3]}s`;
+            document.getElementById('countdown4').innerHTML = `${target4[0]}d ${target4[1]}h ${(target4[2]<10)? '0'+target4[2]:target4[2]}m ${(target4[3]<10)? '0'+target4[3]:target4[3]}s`;
+            document.getElementById('countdown5').innerHTML = `${target5[0]}d ${target5[1]}h ${(target5[2]<10)? '0'+target5[2]:target5[2]}m ${(target5[3]<10)? '0'+target5[3]:target5[3]}s`;
 
         }, 1000);
 
@@ -151,6 +225,8 @@
             const julyDst = new Date(dateTest.getFullYear(), 6, 1);
             return dateTest.getTimezoneOffset() < Math.max(januaryDst.getTimezoneOffset(), julyDst.getTimezoneOffset());
         }
+
+
     </script>
 </body>
 </html>
