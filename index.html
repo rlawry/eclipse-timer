@@ -16,7 +16,6 @@
         }
         .times{
             font-size: 2rem;
-            line-height: 1.6;
         }
         .aych1{
             font-size: 2rem;
@@ -26,6 +25,7 @@
             flex-direction: row;
             justify-content: center;
             gap: 20px 50px;
+            line-height: 1.6;
         }
         .row{
             display: flex;
@@ -43,7 +43,25 @@
 </head>
 <body>
     <h1>South Lewis Total Eclipse April 8th 2024</h1>
-    <div class="times" id="targetTimes"></div><br>
+    <div class="panel">
+        <div class="column">
+            <div class="row">
+                <div class="aych1">First Contact: </div><div class="times" id="targetTimeA"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Totality Begins: </div><div class="times" id="targetTimeB"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Totality Maximum: </div><div class="times" id="targetTimeC"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Totality Ends: </div><div class="times" id="targetTimeD"></div>
+            </div>
+            <div class="row">
+                <div class="aych1">Fourth Contact:  </div><div class="times" id="targetTimeE"></div>
+            </div>
+        </div>
+    </div>
     <hr>
     <div class="panel">
         <div class="column">
@@ -83,11 +101,11 @@
         const targetD = new Date(targetDateTotalityEnds);
         const targetE = new Date(targetDateFourthContact);
 
-        document.getElementById("targetTimes").innerHTML = `First Contact: ${targetA.getHours()-12}:${targetA.getMinutes()}:${targetA.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Totality Begins: ${targetB.getHours()-12}:${targetB.getMinutes()}:${targetB.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Totality Maximum: ${targetC.getHours()-12}:${targetC.getMinutes()}:${targetC.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Totality Ends: ${targetD.getHours()-12}:${targetD.getMinutes()}:${targetD.getSeconds()}PM <br>`;
-        document.getElementById("targetTimes").innerHTML += `Fourth Contact: ${targetE.getHours()-12}:${targetE.getMinutes()}:${targetE.getSeconds()}PM <br>`;
+        document.getElementById("targetTimeA").innerHTML = `${targetA.getHours()-12}:${targetA.getMinutes()}:${targetA.getSeconds()}PM <br>`;
+        document.getElementById("targetTimeB").innerHTML += `${targetB.getHours()-12}:${targetB.getMinutes()}:${targetB.getSeconds()}PM <br>`;
+        document.getElementById("targetTimeC").innerHTML += `${targetC.getHours()-12}:${targetC.getMinutes()}:${targetC.getSeconds()}PM <br>`;
+        document.getElementById("targetTimeD").innerHTML += `${targetD.getHours()-12}:${targetD.getMinutes()}:${targetD.getSeconds()}PM <br>`;
+        document.getElementById("targetTimeE").innerHTML += `${targetE.getHours()-12}:${targetE.getMinutes()}:${targetE.getSeconds()}PM <br>`;
         // Update the countdown every second
         const countdown = setInterval(() => {
             var now = new Date().getTime();
