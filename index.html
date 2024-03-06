@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,6 +93,22 @@
     </div>
     <canvas id="canvas" width="200" height="200"></canvas>
     <script>
+
+        const applicationID = "e213f6b0-4120-4e40-899c-50d1f36f4c50";
+        const applicationSecret = "6376b206015f82bdc52115fc44e786cfa5dcc205877f6c6a04797b97c6f7c6d828c70c65db1bae669d911042488d2039d68fe91594b6b8484f738e4d6b3ac651cef931235521b0b2c7bc59417fd95d6615ae6e659fcc227f122ee72db9ff384bf186ac83533bf23d10f573230f218c34";
+        
+    </script>
+    <script src="https://widgets.astronomyapi.com/cdn/astronomy-api-widgets.js"></script>
+    <script>
+        // const authString = btoa(`${applicationID}:${applicationSecret}`);
+        // document.addEventListener("DOMContentLoaded", function () {
+        // var client = new AstronomyAPI({
+        //   basicToken: authString,
+        // })});
+
+        // client.moonPhase();
+
+        
         function MoonPainter( canvas ) {
             this.lineWidth = 1;
             this.radius = (canvas.width) / 2 - this.lineWidth / 2;
@@ -99,7 +116,7 @@
 
             this.canvas = canvas;
             this.ctx = canvas.getContext( '2d' );
-        }
+        };
 
         MoonPainter.prototype = {
             _drawDisc: function() {
@@ -152,7 +169,7 @@
 
                 this.ctx.restore();		
             }
-        }
+        };
 
         var phase = 0.58;
         var points = 0;
@@ -160,8 +177,23 @@
         var b = 235;
         var a = 135;
         var g = 206;
+        
+        var makePhase = phaseGenerate();
+        console.log(makePhase + " make phase");
+        phase = makePhase;
         painter.paint(phase);
-        //2551442976
+
+        function phaseGenerate(){
+            var timeNow = Date.now();
+            var lastFull = 1708777800000;
+            var nextFull = 1711350000000;
+            var totalPeriod = (nextFull - lastFull);
+            console.log(totalPeriod + " total period");
+            return 1-(1-2*Math.abs(Math.round(1/totalPeriod*(timeNow-lastFull),0)-1/totalPeriod*(timeNow-lastFull)));
+        }
+
+        var cycleLength = 2551442976;
+
         // Target date: April 8th, 2024
         const targetDateFirstContact = new Date('April 8, 2024 14:10:34').getTime();
         const targetDateTotalityBegins = new Date('April 8, 2024 15:23:24').getTime();
@@ -183,6 +215,10 @@
         // Update the countdown every second
         const countdown = setInterval(() => {
             var now = new Date().getTime();
+            var julianDate = now/86400+2440587.5;
+            var timeJD = (julianDate-2451545.0)/36525;
+            const lengthOfMonth = 29.5305888531 + 0.0000002161*timeJD-3.64*10**(-10)*timeJD*timeJD;
+            phase = 
             console.log(now);
             const dstInEffect = isDstInEffect(now);
             console.log(dstInEffect);
